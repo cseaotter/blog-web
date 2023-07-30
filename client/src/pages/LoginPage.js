@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   async function login(ev) {
     ev.preventDefault();
