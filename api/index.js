@@ -7,6 +7,9 @@ const bcrypt = require('bcryptjs');
 const app = express();
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const multer = require("multer");
+const uploadMiddleware = multer({dest: 'uploads/'});
+const fs = require('fs');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfe45we45w345wegw345werjktjwertkj';
@@ -69,11 +72,19 @@ app.get("/logout", (req, res)=>{
   res.send("happy logging out");
 })
 
+app.post("/post", uploadMiddleware.single("file"), (req, res) => {
+  const {originalname, path} = req.file;
+  const parts = originalname.split('.');
+  const ext = parts[parts.length - 1];
+  const newPath = path + "." + ext;
+  fs.renameSync(path, newPath);
+  
+})
+
+app.get("/post", (req, res) => {
+  res.send("happy posting");
+})
+
 app.listen(4000);
-//H8kLSNYdDTOp2gYJ
-
-//mongodb+srv://blog:H8kLSNYdDTOp2gYJ@cluster0.vsn4g1m.mongodb.net/?retryWrites=true&w=majority
-
-//second: DNsY4b1jSpWihopJ
 
 //newblog: P3awWEVKiQfsss2p
