@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Navigate } from "react-router-dom";
 
 const modules = {
   toolbar: [
@@ -36,6 +37,7 @@ export default function CreatePost() {
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   async function createNewPost(ev) {
     const data = new FormData();
@@ -45,21 +47,19 @@ export default function CreatePost() {
     data.append("file", files[0]);
     ev.preventDefault();
 
-    // const headers = new Headers();
-    // //headers.append("Authorization", "Bearer " + YOUR_ACCESS_TOKEN); // If you have any authentication mechanism, include it here
-    // // Add this line to set the Content-Type header with the boundary parameter
-    // headers.append("Content-Type", "multipart/form-data; boundary=someBoundary");
+    const response = await fetch("http://localhost:4000/post", {
+      method: "POST",
+      body: data,
+      credentials: "include",
+    });
 
-    try {
-      const response = await fetch("http://localhost:4000/post", {
-        method: "POST",
-        // headers: headers,
-        body: data,
-      });
-      console.log(await response.json());
-    } catch (error) {
-        console.error("Error creating the post:", error);
+    if (response.ok) {
+      setRedirect(true);
     }
+  }
+
+  if (redirect) {
+    return <Navigate to={"/"} />;
   }
 
   return (

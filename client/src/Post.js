@@ -1,16 +1,18 @@
-export default function Post() {
+import {formatISO9075} from "date-fns";
+
+export default function Post({title, summary, cover, content, createdAt, author}) {
     return (
         <div className="post">
         <div className="image">
-          <img src="https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.88847xw:1xh;center,top&resize=1200:*" alt=""/>
+          <img src={"http://localhost:4000/" + cover} alt=""/>
         </div>
         <div className="texts">
-          <h2>Cutest Cat of the Year</h2>
+          <h2>{title}</h2>
           <p className="info">
-            <a className="author">Carol Gao</a>
-            <time>2023-07-25 17:54</time>
+            <a className="author">{author?.username}</a>
+            <time>{formatISO9075(new Date(createdAt))}</time>
           </p>
-          <p className="summary">Here are the cutest cat of the year</p>
+          <p className="summary">{summary}</p>
         </div>
       </div>
     );
