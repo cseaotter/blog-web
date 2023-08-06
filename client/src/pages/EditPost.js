@@ -17,7 +17,6 @@ export default function EditPost() {
         setTitle(postInfo.title);
         setContent(postInfo.content);
         setSummary(postInfo.summary);
-
       })
     );
   }, []);
@@ -28,22 +27,29 @@ export default function EditPost() {
     data.append("title", title);
     data.append("summary", summary);
     data.append("content", content);
-    
+    data.append('id', id);
+
     if (files?.[0]) {
-        data.append("file", files?.[0]);
+      data.append("file", files?.[0]);
     }
 
     const response = await fetch("http://localhost:4000/post", {
       method: "PUT",
       body: data,
+      credentials:"include",
     });
-    
-    setRedirect(true);
 
+    if (response.ok) {
+        setRedirect(true);
+    }
   }
 
   if (redirect) {
-    return <Navigate to={"/post/"+id} />;
+    if (id != null) {
+        return <Navigate to={"/post/" + id} />;
+    } else {
+        return <Navigate to={"/"} />;
+    }
   }
 
   return (
