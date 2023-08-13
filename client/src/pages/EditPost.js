@@ -27,7 +27,7 @@ export default function EditPost() {
     data.append("title", title);
     data.append("summary", summary);
     data.append("content", content);
-    data.append('id', id);
+    data.append("id", id);
 
     if (files?.[0]) {
       data.append("file", files?.[0]);
@@ -36,19 +36,20 @@ export default function EditPost() {
     const response = await fetch("http://localhost:4000/post", {
       method: "PUT",
       body: data,
-      credentials:"include",
+      credentials: "include",
     });
 
     if (response.ok) {
-        setRedirect(true);
+      setRedirect(true);
     }
   }
 
   if (redirect) {
+    // return <Navigate to={"/post/" + id} />;
     if (id != null) {
-        return <Navigate to={"/post/" + id} />;
+      return <Navigate to={"/post/" + id} />;
     } else {
-        return <Navigate to={"/"} />;
+      return <Navigate to={"/"} />;
     }
   }
 
@@ -68,7 +69,7 @@ export default function EditPost() {
       />
       <input type="file" onChange={(ev) => setFiles(ev.target.files)} />
       <Editor value={content} onChange={setContent} />
-      <button style={ { marginTop: "5px" } }>Update post</button>
+      <button style={{ marginTop: "5px" }}>Update post</button>
     </form>
   );
 }

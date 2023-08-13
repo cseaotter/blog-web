@@ -66,7 +66,10 @@ app.get("/login", (req, res) => {
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, secret, {}, (err, info) => {
-    if (err) throw err;
+    if (err) {
+      return res.status(401).json({ error: "Unauthorized" });
+      //throw err;
+    }
     res.json(info);
   });
 });
