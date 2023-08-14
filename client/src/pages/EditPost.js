@@ -45,12 +45,12 @@ export default function EditPost() {
   }
 
   if (redirect) {
-    // return <Navigate to={"/post/" + id} />;
-    if (id != null) {
-      return <Navigate to={"/post/" + id} />;
-    } else {
-      return <Navigate to={"/"} />;
-    }
+    return <Navigate to={"/post/" + id} />;
+    // if (id != null) {
+    //   return <Navigate to={"/post/" + id} />;
+    // } else {
+    //   return <Navigate to={"/"} />;
+    // }
   }
 
   return (
