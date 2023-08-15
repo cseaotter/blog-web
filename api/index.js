@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
+require('dotenv').config();
 
 const salt = bcrypt.genSaltSync(10);
 const secret = "asdfe45we45w345wegw345werjktjwertkj";
@@ -147,6 +148,4 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
-app.listen(4000);
-
-//newblog: P3awWEVKiQfsss2p
+app.listen(process.env.PORT || 4000);
